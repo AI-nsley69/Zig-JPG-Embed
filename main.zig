@@ -21,7 +21,7 @@ pub fn main() !void {
         try output.writeAll("Finished encryption\n");
     } else if (std.mem.eql(u8, subcmd, "decrypt")) {
         try output.writeAll("Beginning decryption..\n");
-        decrypt(allocator);
+        try decrypt(allocator);
         try output.writeAll("Finished decryption..\n");
     } else {
         try output.writeAll("Missing valid arguments, try encrypt/decrypt\n");
@@ -50,9 +50,13 @@ fn decrypt(allocator: *std.mem.Allocator) !void {
     const hidden_message = try std.fs.cwd().openFile("imagezero.jpg", .{});
     defer hidden_message.close();
 
-    const raw_data = try hidden_message.reader().readAllAlloc(allocator, 1000*1000*24);
-    defer allocator.free(raw_data);
+    try hidden_message.seekFromEnd(-4);
+    const string_len = try hidden_message.reader().readIntLittle(u32);
 
-    const final_message = try std.fs.cwd().createFile("message.txt", .{});
-    defer final_message.close();
+    try hidden_message.seekFromEnd(-4 - @intCast(i32, string_len));
+    const message_content = try allocator.alloc(u8, string_len);
+    defer allocator.free(message_content);
+    try hidden_message.reader().readNoEof(message_content);
+
+    try std.fs.cwd().writeFile("message.txt", message_content);
 }
