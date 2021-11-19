@@ -51,7 +51,7 @@ fn encrypt(allocator: *std.mem.Allocator, passwd: []const u8) !void {
 
     var encrypted_msg = try allocator.alloc(u8, raw_message.len);
     defer allocator.free(encrypted_msg);
-
+    // Creating vars needed for encryption
     var nonce: [Cipher.nonce_length]u8 = undefined;
     std.crypto.random.bytes(&nonce);
     var tag: [Cipher.tag_length]u8 = undefined;
