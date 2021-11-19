@@ -1,6 +1,7 @@
 const std = @import("std");
 
 pub fn main() !void {
+    // Setup allocators
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer std.debug.assert(!gpa.deinit());
     const allocator = &gpa.allocator;
