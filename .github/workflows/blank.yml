@@ -1,0 +1,50 @@
+name: CI
+on:
+  push:
+    paths:
+      - '**.zig'
+
+jobs:
+  build-lin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v1
+        with: {version: master}
+      - run: zig build -Drelease -Dtarget=x86_64-linux
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jpg-embeder-linux
+          path: zig-out/
+
+  build-win:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v1
+        with: {version: master}
+      - run: zig build -Drelease -Dtarget=x86_64-windows
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jpg-embeder-windows
+          path: zig-out/
+
+  build-mac:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v1
+        with: {version: master}
+      - run: zig build -Drelease -Dtarget=x86_64-macos
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jpg-embeder-macos
+          path: zig-out/
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v1
+        with: {version: master}
+      - run: zig fmt --check .
