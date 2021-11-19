@@ -43,8 +43,8 @@ fn encrypt(allocator: *std.mem.Allocator, passwd: []const u8) !void {
     defer photo.close();
     defer message.close();
     // Get the raw data for both
-    const raw_photo = try photo.reader().readAllAlloc(allocator, 1024*1024*16);
-    const raw_message = try message.reader().readAllAlloc(allocator, 1000*1000*8);
+    const raw_photo = try photo.reader().readAllAlloc(allocator, 1024 * 1024 * 16);
+    const raw_message = try message.reader().readAllAlloc(allocator, 1000 * 1000 * 8);
     defer allocator.free(raw_photo);
     defer allocator.free(raw_message);
 
