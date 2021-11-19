@@ -14,7 +14,7 @@ jobs:
       - run: zig build -Drelease-safe -Dcpu=baseline -Dtarget=x86_64-linux
       - uses: actions/upload-artifact@v1
         with:
-          name: jpg-embeder-linux
+          name: imbed
           path: zig-out/
 
   build-win:
@@ -23,10 +23,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: goto-bus-stop/setup-zig@v1
         with: {version: master}
-      - run: zig build -Drelease-safe -Dcpu=baseline -Dtarget=x86_64-linux
+      - run: zig build -Drelease-safe -Dcpu=baseline -Dtarget=x86_64-windows
       - uses: actions/upload-artifact@v1
         with:
-          name: jpg-embeder-windows
+          name: imbed
           path: zig-out/
 
   build-mac:
@@ -35,10 +35,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: goto-bus-stop/setup-zig@v1
         with: {version: master}
-      - run: zig build -Drelease-safe -Dcpu=baseline -Dtarget=x86_64-linux
+      - run: zig build -Drelease-safe -Dcpu=baseline -Dtarget=x86_64-macos
       - uses: actions/upload-artifact@v1
         with:
-          name: jpg-embeder-macos
+          name: imbed
           path: zig-out/
 
   lint:
