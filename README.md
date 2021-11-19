@@ -10,11 +10,11 @@
 
 `imagezero.jpg` = encrypted jpg image
 
-`zig-out/bin/jpg-embeder encrypt [passwd]`
+`imbed encrypt [passwd]`
 
 ## Decryption
 `imagezero.jpg` = input photo
 
 `message.txt` = output file for decrypted message
 
-`zig-out/bin/jpg-embeder decrypt [passwd]`
+`imbed decrypt [passwd]`
