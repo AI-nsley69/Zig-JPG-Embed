@@ -37,7 +37,7 @@ pub fn main() !void {
 
 fn encrypt(allocator: *std.mem.Allocator, passwd: []const u8) !void {
     const Kdf = std.crypto.kdf.hkdf.HkdfSha512;
-    const Cipher = std.crypto.aead.chacha_poly.ChaCha20Poly1305;
+    const Cipher = std.crypto.aead.salsa_poly.XSalsa20Poly1305;
     // Open the photo and message file
     const photo = try std.fs.cwd().openFile("photo.jpg", .{});
     const message = try std.fs.cwd().openFile("message.txt", .{});
@@ -71,7 +71,7 @@ fn encrypt(allocator: *std.mem.Allocator, passwd: []const u8) !void {
 
 fn decrypt(allocator: *std.mem.Allocator, passwd: []const u8) !void {
     const Kdf = std.crypto.kdf.hkdf.HkdfSha512;
-    const Cipher = std.crypto.aead.chacha_poly.ChaCha20Poly1305;
+    const Cipher = std.crypto.aead.salsa_poly.XSalsa20Poly1305;
 
     const hidden_message = try std.fs.cwd().openFile("imagezero.jpg", .{});
     defer hidden_message.close();
